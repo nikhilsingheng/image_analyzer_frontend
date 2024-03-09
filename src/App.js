@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from "react";
+import "./App.css";
+import Header from "./comman/Header/Header";
+import Sidebar from "./comman/Sidebar/Sidebar";
+import Home from "./component/Home/Home";
+import Imageupload from "./component/Imageupload/Imageupload";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Image_listing from "./component/Image_listing/Image_listing";
 function App() {
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+
+  const OpenSidebar = () => {
+    setOpenSidebarToggle(!openSidebarToggle);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="grid-container">
+        <Header OpenSidebar={OpenSidebar} />
+        <Sidebar
+          openSidebarToggle={openSidebarToggle}
+          OpenSidebar={OpenSidebar}
+        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Imageupload" element={<Imageupload />} />
+          <Route path="/Image_listing" element={<Image_listing />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
